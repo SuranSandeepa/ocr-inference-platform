@@ -5,6 +5,7 @@ imagePullSecretName: regcred
 # API Gateway Settings
 gateway:
   name: api-gateway
+  serviceName: api-gateway-service
   image: "suranpickme/ocr-inference-platform"
   tag: "api-gateway-v1"
   port: 8001
@@ -17,6 +18,7 @@ gateway:
 # OCR Model Settings
 model:
   name: ocr-model
+  serviceName: ocr-model-container
   image: "suranpickme/ocr-inference-platform"
   tag: "ocr-model-v1"
   port: 8080

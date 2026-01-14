@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.gateway.name }}-service
+  name: {{ .Values.gateway.serviceName }}
 spec:
   type: NodePort
   selector:
