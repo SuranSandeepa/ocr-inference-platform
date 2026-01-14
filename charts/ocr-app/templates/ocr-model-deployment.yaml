@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.model.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.model.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.model.name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecretName }}
+      containers:
+        - name: model
+          image: "{{ .Values.model.image }}:{{ .Values.model.tag }}"
+          ports:
+            - containerPort: {{ .Values.model.port }}
+          resources:
+            {{- toYaml .Values.model.resources | nindent 12 }}
+            

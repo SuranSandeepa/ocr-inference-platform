@@ -1,0 +1,19 @@
+1. The Architecture: The Proxy Pattern
+
+Two-Tier Microservice Architecture
+
+The API Gateway (Entry Point): Acts as the "face" of the application. It handles user authentication (potentially), file uploads, and protocol translation. It uses FastAPI, which is a modern, high-performance web framework for building APIs with Python.
+
+The OCR Model Service (Worker): A specialized service that does only one thing: extract text from images. It uses KServe, a standard tool in the "MLOps" world for serving machine learning models.
+
+2. Dependency Management: Why Poetry?
+In your internship, you'll see many people using pip install -r requirements.txt. However, your project uses Poetry.
+
+Determinism: Poetry uses a poetry.lock file. This ensures that every single person who runs this project installs the exact same version of every library.
+
+Virtual Environments: Poetry automatically creates an isolated environment for your project so its libraries don't clash with your computer's system libraries.
+
+3. The OCR Engine: Tesseract
+Tesseract is an Optical Character Recognition (OCR) engine. It isn't a Python library; it is a piece of software written in C++. The Python library pytesseract is simply a "wrapper" that sends the image to the Tesseract software installed on your Ubuntu machine and reads the result.
+
+

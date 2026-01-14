@@ -15,7 +15,7 @@ fuser -k 8001/tcp 2>/dev/null || true
 fuser -k 8080/tcp 2>/dev/null || true
 
 # 3. Patch the URL in api-gateway for Docker Networking
-# We use | as a delimiter because the URL contains forward slashes /
+# use | as a delimiter because the URL contains forward slashes /
 echo "Updating API Gateway configuration..."
 sed -i "s|localhost:8080|ocr-model-container:8080|g" "$ROOT_DIR/api-gateway/api-gateway.py"
 

@@ -1,11 +1,10 @@
 
 # 01) Local Development 
 
-The environment was first prepared by installing the Tesseract OCR engine and Poetry package manager. We utilized Poetry to create isolated virtual environments, ensuring dependency consistency. After adjusting the service configuration for local networking (localhost), we verified the system by sending an image through the API Gateway, which successfully proxied the request to the KServe Model Service, returning the extracted text in JSON format.
+The project began with setting up the development environment on Ubuntu. The core objective was to get the KServe model service and the FastAPI gateway talking to each other locally before moving to containers.
 
 ## 1.1) System Dependencies Installation
-
-The OCR service requires the Tesseract engine
+The OCR service relies on the Tesseract engine to perform text extraction from images.
 
 ```
 # Update package list and install Tesseract OCR engine
@@ -14,7 +13,6 @@ sudo apt install -y tesseract-ocr libtesseract-dev
 ```
 
 ## 1.2) Python Environment Setup
-
 The project uses Poetry for deterministic dependency management.
 
 ```
@@ -38,7 +36,7 @@ poetry --version
 
 ## 1.3) OCR Model Service Initialization
 
-To prepare the environment and dependencies for the KServe model.
+To prepare the environment and dependencies for the KServe model. \
 /ocr-devops-assignment/ocr-model
 
 ```
@@ -60,7 +58,7 @@ poetry run python model.py
 
 ## 1.4) API Gateway Service Initialization
 
-To prepare the FastAPI gateway that handles external image uploads.
+To prepare the FastAPI gateway that handles external image uploads. \
 ocr-devops-assignment/api-gateway
 
 ```
@@ -111,5 +109,34 @@ Network Orchestration: It creates a dedicated Docker bridge network (ocr-network
 During this phase, we encountered a Port Conflict error. The Docker daemon was unable to bind the API Gateway to port 8001 because the local FastAPI service (started in Phase 1) was still occupying that port.
 Utilized the ``` fuser -k 8001/tcp ``` command within the automation script to identify and terminate any processes currently using the required port before launching the containers.
 
-## 2.4) Image Distribution (Docker Hub)
+## 2.4) Image Distribution
 To prepare for Kubernetes deployment, the local images were tagged and pushed to a remote repository on Docker Hub. This makes the images accessible to the Minikube cluster.
+
+# 03) Infrastructure Setup
+With the application successfully containerized and images pushed to the cloud, the focus shifted to building a production-grade platform. This phase involved setting up a local Kubernetes cluster and deploying industry-standard tools for GitOps (ArgoCD) and Observability (Prometheus & Grafana) using the Helm package manager.
+
+## 3.1) Kubernetes Cluster Orchestration
+We utilized Minikube to simulate a real-world Kubernetes environment on a local machine. To ensure the cluster could handle multiple heavy management tools, we specifically provisioned it with increased resources.
+
+## 3.2) Automated Infrastructure with Helm
+Instead of manual YAML manifests, we adopted Helm to manage the lifecycle of our platform tools. Helm allows for "Infrastructure as Code," where complex software stacks are installed as single packages (Charts).
+
+We automated the entire setup through a script named infra_setup.sh, which performs the following:
+
+Repository Syncing: Connects to public Helm (Argo and Prometheus-community).
+
+Idempotent Deployment: Uses helm upgrade --install to ensure the script can be run multiple times without causing errors or duplicate installs.
+
+Resource Optimization: Overrides default settings to prevent the monitoring tools from consuming all available system memory.
+
+## 3.3) Tooling & Observability Stack
+
+ArgoCD: Installed in the argocd namespace to facilitate Declarative GitOps. It monitors our Git repository and automatically syncs changes to the cluster.
+
+Prometheus: Deployed to scrape and store real-time metrics from our OCR services.
+
+Grafana: Deployed alongside Prometheus to provide a visual dashboard for monitoring system health.
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)

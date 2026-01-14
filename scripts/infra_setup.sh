@@ -10,7 +10,6 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-
 echo "Deploying ArgoCD"
 kubectl create namespace argocd || true
 helm upgrade --install argocd argo/argo-cd \

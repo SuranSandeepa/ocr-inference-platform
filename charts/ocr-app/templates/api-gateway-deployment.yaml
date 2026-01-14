@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gateway.name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.gateway.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.gateway.name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecretName }}
+      containers:
+        - name: gateway
+          image: "{{ .Values.gateway.image }}:{{ .Values.gateway.tag }}"
+          ports:
+            - containerPort: {{ .Values.gateway.port }}
+          envFrom:
+            - configMapRef:
+                name: ocr-config
+          resources:
+            {{- toYaml .Values.gateway.resources | nindent 12 }}
