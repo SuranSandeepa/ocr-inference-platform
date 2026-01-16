@@ -7,7 +7,7 @@ gateway:
   name: api-gateway
   serviceName: api-gateway-service
   image: "suranpickme/ocr-inference-platform"
-  tag: "api-gateway-v1"
+  tag: "api-gateway-v2"
   port: 8001
   nodePort: 30001
   resources:
@@ -20,7 +20,7 @@ model:
   name: ocr-model
   serviceName: ocr-model-container
   image: "suranpickme/ocr-inference-platform"
-  tag: "ocr-model-v1"
+  tag: "ocr-model-v2"
   port: 8080
   resources:
     limits:

@@ -16,4 +16,3 @@ Virtual Environments: Poetry automatically creates an isolated environment for y
 3. The OCR Engine: Tesseract
 Tesseract is an Optical Character Recognition (OCR) engine. It isn't a Python library; it is a piece of software written in C++. The Python library pytesseract is simply a "wrapper" that sends the image to the Tesseract software installed on your Ubuntu machine and reads the result.
 
-
