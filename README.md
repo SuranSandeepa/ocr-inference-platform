@@ -9,4 +9,4 @@ Finally, Prometheus scrapes inference metrics from the model,
 providing real-time observability via Grafana dashboards.
 ```
 
-<img width="938" height="632" alt="image" src="https://github.com/user-attachments/assets/c1383604-fcc4-4826-8220-37221ccf6ba1" />
+![alt text](OCR.drawio.png)
