@@ -18,9 +18,10 @@ spec:
         - name: gateway
           image: "{{ .Values.gateway.image }}:{{ .Values.gateway.tag }}"
           ports:
-            - containerPort: {{ .Values.gateway.port }}
-          envFrom:
-            - configMapRef:
-                name: ocr-config
+            - name: http
+              containerPort: {{ .Values.gateway.port }}
+          env:
+            - name: KSERVE_URL
+              value: "http://{{ .Values.model.serviceName }}.default.svc.cluster.local:{{ .Values.model.port }}/v2/models/{{ .Values.model.name }}/infer"
           resources:
             {{- toYaml .Values.gateway.resources | nindent 12 }}

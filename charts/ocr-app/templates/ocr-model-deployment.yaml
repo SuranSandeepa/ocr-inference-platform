@@ -12,11 +12,13 @@ spec:
       labels:
         app: {{ .Values.model.name }}
     spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecretName }}
       containers:
         - name: model
           image: "{{ .Values.model.image }}:{{ .Values.model.tag }}"
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: {{ .Values.model.port }}
           resources:
             {{- toYaml .Values.model.resources | nindent 12 }}
