@@ -20,7 +20,7 @@ model:
   name: ocr-model
   serviceName: ocr-model-service
   image: "suranpickme/ocr-inference-platform" # Same repo
-  tag: "ocr-model-v3"                             # Unique tag
+  tag: "ocr-model-v4"                             # Unique tag
   port: 8080
   metricsPort: 8000
   resources:

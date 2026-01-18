@@ -175,3 +175,4 @@ Kubernetes won't kill my "old" working pods until the "new" v3 pods are healthy.
 
 ![alt text](image-6.png)
 ![alt text](image-7.png)
+![alt text](image-8.png)
