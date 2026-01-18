@@ -167,12 +167,11 @@ I transitioned from infrastructure setup to Application Deployment. This is wher
 
 
 
-
-![alt text](image-5.png)
-
-
 Kubernetes won't kill my "old" working pods until the "new" v3 pods are healthy. Because the v3 pod is stuck with an image error, Kubernetes is keeping the old ones alive so my app doesn't go completely offline.
 
 ![alt text](image-6.png)
 ![alt text](image-7.png)
-![alt text](image-8.png)
+![alt text](image-9.png)
+
+![alt text](image-11.png)
+![alt text](image-12.png)
