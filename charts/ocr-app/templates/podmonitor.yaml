@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ocr-model-monitor
+  labels:
+    release: monitoring # This must match your Prometheus Operator release name
+spec:
+  selector:
+    matchLabels:
+      app: ocr-model
+  podMetricsEndpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
