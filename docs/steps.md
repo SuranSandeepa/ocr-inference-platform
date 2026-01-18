@@ -168,3 +168,4 @@ I transitioned from infrastructure setup to Application Deployment. This is wher
 
 
 
+![alt text](image-5.png)

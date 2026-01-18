@@ -6,8 +6,8 @@ imagePullSecretName: regcred
 gateway:
   name: api-gateway
   serviceName: api-gateway-service
-  image: "suranpickme/ocr-inference-platform"
-  tag: "api-gateway-v2"
+  image: "suranpickme/ocr-inference-platform" # Same repo
+  tag: "api-gateway-v3"                           # Unique tag
   port: 8001
   nodePort: 30001
   resources:
@@ -18,10 +18,11 @@ gateway:
 # OCR Model Settings
 model:
   name: ocr-model
-  serviceName: ocr-model-container
-  image: "suranpickme/ocr-inference-platform"
-  tag: "ocr-model-v2"
+  serviceName: ocr-model-service
+  image: "suranpickme/ocr-inference-platform" # Same repo
+  tag: "ocr-model-v3"                             # Unique tag
   port: 8080
+  metricsPort: 8000
   resources:
     limits:
       memory: "1024Mi"

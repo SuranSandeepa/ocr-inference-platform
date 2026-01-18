@@ -2,10 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.model.name }}
-  annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
-        prometheus.io/path: "/metrics"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,13 +12,11 @@ spec:
       labels:
         app: {{ .Values.model.name }}
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.imagePullSecretName }}
       containers:
         - name: model
           image: "{{ .Values.model.image }}:{{ .Values.model.tag }}"
           ports:
-            - containerPort: {{ .Values.model.port }}
+            - name: http
+              containerPort: 8080
           resources:
             {{- toYaml .Values.model.resources | nindent 12 }}
-            

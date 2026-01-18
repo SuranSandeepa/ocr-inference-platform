@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: ocr-model-monitor
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: ocr-model
+  podMetricsEndpoints:
+  - port: http # This matches the port name in your deployment
+    path: /metrics
+    interval: 15s

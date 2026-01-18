@@ -2,8 +2,13 @@
 
 set -e
 
-echo "Starting Minikube Cluster"
-minikube start --driver=docker --memory=4096 --cpus=2
+# 1. Ensure Minikube is running
+if ! minikube status > /dev/null 2>&1; then
+  echo "Starting Minikube Cluster..."
+  minikube start --driver=docker --memory=4096 --cpus=2
+else
+  echo "Minikube is already running."
+fi
 
 echo "Configuring Helm Repositories"
 helm repo add argo https://argoproj.github.io/argo-helm
