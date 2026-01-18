@@ -9,9 +9,9 @@ from kserve import Model, ModelServer, InferRequest, InferResponse, InferInput, 
 from kserve.utils.utils import generate_uuid
 from prometheus_client import Histogram, Counter
 
-# These will be automatically picked up by the KServe metrics endpoint
-REQUEST_COUNT = Counter('request_predict_total', 'Total OCR requests', ['status'])
-PREDICT_LATENCY = Histogram('request_predict_seconds', 'Inference latency')
+# We use v4 in the name so we can verify it in the logs
+REQUEST_COUNT = Counter('ocr_v4_total', 'Total OCR requests', ['status'])
+PREDICT_LATENCY = Histogram('ocr_v4_latency_seconds', 'Inference latency')
 
 class OCRModel(Model):
     def __init__(self, name: str):
@@ -22,16 +22,13 @@ class OCRModel(Model):
     async def predict(self, infer_request: InferRequest, headers: Dict[str, str] = None) -> InferResponse:
         start_time = time.time()
         try:
-            # Extract image data
             input_tensor = infer_request.inputs[0]
             base64_image_data = input_tensor.data[0] 
             image_data = base64.b64decode(base64_image_data)
             
-            # OCR Processing
             image = Image.open(io.BytesIO(image_data))
             extracted_text = pytesseract.image_to_string(image)
 
-            # Record metrics
             REQUEST_COUNT.labels(status="success").inc()
             PREDICT_LATENCY.observe(time.time() - start_time)
 
@@ -48,5 +45,4 @@ class OCRModel(Model):
 
 if __name__ == "__main__":
     model = OCRModel("ocr-model")
-    # KServe handles the metrics server internally on port 8080
     ModelServer().start([model])
