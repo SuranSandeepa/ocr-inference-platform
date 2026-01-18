@@ -58,3 +58,7 @@ Run the provided demo script to open all necessary port-forwards and see your ac
 ```
 bash scripts/demo_start.sh
 ```
+
+![alt text](docs/image-9.png)
+
+![alt text](docs/image-12.png)
